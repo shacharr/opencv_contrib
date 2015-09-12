@@ -75,6 +75,8 @@ bool Tracker::init( const Mat& image, const Rect2d& boundingBox )
 
   bool initTracker = initImpl( image, boundingBox );
 
+  cachedLastBoundingBox = boundingBox;
+
   //check if the model component is initialized
   if( model == 0 )
   {
@@ -93,6 +95,8 @@ bool Tracker::init( const Mat& image, const Rect2d& boundingBox )
 bool Tracker::update( const Mat& image, Rect2d& boundingBox )
 {
 
+  bool ret;
+
   if( !isInit )
   {
     return false;
@@ -101,7 +105,13 @@ bool Tracker::update( const Mat& image, Rect2d& boundingBox )
   if( image.empty() )
     return false;
 
-  return updateImpl( image, boundingBox );
+  boundingBox = cachedLastBoundingBox;
+
+  ret = updateImpl( image, boundingBox );
+
+  cachedLastBoundingBox = boundingBox;
+
+  return ret;
 }
 
 Ptr<Tracker> Tracker::create( const String& trackerType )

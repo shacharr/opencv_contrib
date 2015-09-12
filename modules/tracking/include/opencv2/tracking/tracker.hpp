@@ -97,7 +97,7 @@ class CV_EXPORTS_W TrackerFeature
     -   "LBP" -- Local Binary Pattern features
     -   "FEATURE2D" -- All types of Feature2D
      */
-  static Ptr<TrackerFeature> create( const String& trackerFeatureType );
+  CV_WRAP static Ptr<TrackerFeature> create( const String& trackerFeatureType );
 
   /** @brief Identify most effective features
     @param response Collection of response for the specific TrackerFeature
@@ -538,7 +538,7 @@ class CV_EXPORTS_W Tracker : public virtual Algorithm
 
     @return True if initialization went succesfully, false otherwise
      */
-  bool init( const Mat& image, const Rect2d& boundingBox );
+  CV_WRAP bool init( const Mat& image, const Rect2d& boundingBox );
 
   /** @brief Update the tracker, find the new most likely bounding box for the target
     @param image The current frame
@@ -549,7 +549,7 @@ class CV_EXPORTS_W Tracker : public virtual Algorithm
     current frame. Note, that latter *does not* imply that tracker has failed, maybe target is indeed
     missing from the frame (say, out of sight)
      */
-  bool update( const Mat& image, Rect2d& boundingBox );
+  CV_WRAP bool update( const Mat& image, CV_OUT Rect2d& boundingBox );
 
   /** @brief Creates a tracker by its name.
     @param trackerType Tracker type
@@ -559,7 +559,7 @@ class CV_EXPORTS_W Tracker : public virtual Algorithm
     -   "MIL" -- TrackerMIL
     -   "BOOSTING" -- TrackerBoosting
      */
-  static Ptr<Tracker> create( const String& trackerType );
+  CV_WRAP static Ptr<Tracker> create( const String& trackerType );
 
   virtual void read( const FileNode& fn )=0;
   virtual void write( FileStorage& fs ) const=0;
@@ -1330,8 +1330,8 @@ class CV_EXPORTS_W MultiTracker
 class ROISelector {
 public:
   Rect2d select(Mat img, bool fromCenter = true);
-  Rect2d select(const std::string& windowName, Mat img, bool showCrossair = true, bool fromCenter = true);
-  void select(const std::string& windowName, Mat img, std::vector<Rect2d> & boundingBox, bool fromCenter = true);
+  Rect2d select(const String& windowName, Mat img, bool showCrossair = true, bool fromCenter = true);
+  void select(const String& windowName, Mat img, std::vector<Rect2d> & boundingBox, bool fromCenter = true);
 
   struct handlerT{
     // basic parameters
@@ -1359,8 +1359,8 @@ private:
 };
 
 Rect2d CV_EXPORTS_W selectROI(Mat img, bool fromCenter = true);
-Rect2d CV_EXPORTS_W selectROI(const std::string& windowName, Mat img, bool showCrossair = true, bool fromCenter = true);
-void CV_EXPORTS_W selectROI(const std::string& windowName, Mat img, std::vector<Rect2d> & boundingBox, bool fromCenter = true);
+Rect2d CV_EXPORTS_W selectROI(const String& windowName, Mat img, bool showCrossair = true, bool fromCenter = true);
+void CV_EXPORTS selectROI(const String& windowName, Mat img, std::vector<Rect2d> & boundingBox, bool fromCenter = true);
 
 } /* namespace cv */
 

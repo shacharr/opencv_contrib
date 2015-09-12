@@ -571,6 +571,8 @@ class CV_EXPORTS_W Tracker : public virtual Algorithm
 
   bool isInit;
 
+  Rect2d cachedLastBoundingBox;
+
   Ptr<TrackerFeatureSet> featureSet;
   Ptr<TrackerSampler> sampler;
   Ptr<TrackerModel> model;
